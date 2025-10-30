@@ -70,7 +70,11 @@ func (m BubbleteaModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 		case "r":
 			return m, func() tea.Msg {
-				return connectToSignalR(m.url)
+				returnResult := connectToSignalR(m.url)
+				if returnResult.(connectionStatus).connected == true {
+					m.messages = []string{}
+				}
+				return returnResult
 			}
 		case "i", "ctrl+i":
 			m.promptMode = true
@@ -119,7 +123,7 @@ func (m BubbleteaModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m BubbleteaModel) View() string {
 
 	if m.quitting {
-		return "👋  Goodbye!\n\n"
+		return "👋  Adios!\n\n"
 	}
 
 	titleStyle := lipgloss.NewStyle().

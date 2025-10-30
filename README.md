@@ -2,7 +2,7 @@
 
 Built this cuz I couldn't get SignalR testing to work in Postman/Yaak/Bruno.
 
-Currently very bare bones. Will add more to this as I need or feel free to submit a pull request
+Currently very bare bones, will add more to this as I need. Feel free to submit a pull request or fork for your own use
 
 
 

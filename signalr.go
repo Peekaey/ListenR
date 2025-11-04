@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"net/http"
+	"strings"
 	"time"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -10,7 +12,28 @@ import (
 
 func connectToSignalR(url string) tea.Msg {
 
-	c, _, err := websocket.DefaultDialer.Dial(url, nil)
+	var webSocketUrl = url
+	reqHeader := http.Header{}
+	// Check if any groups/query parameters have been passed through
+	var urlSplit = strings.Split(url, " ")
+	if len(urlSplit) > 1 {
+		// Get the base Url, then we split and sort the rest into headers based off a predetermined structure
+		webSocketUrl = urlSplit[0]
+
+		// Split into header groups delimited by commas
+		var headerGroups = strings.Split(strings.Join(urlSplit[1:], " "), ",")
+
+		for _, headerGroups := range headerGroups {
+			// Split into key and value based off the colon delimiter
+			var headerKV = strings.SplitN(headerGroups, ":", 2)
+			if len(headerKV) == 2 {
+				reqHeader.Set(strings.TrimSpace(headerKV[0]), strings.TrimSpace(headerKV[1]))
+			}
+		}
+
+	}
+
+	c, _, err := websocket.DefaultDialer.Dial(webSocketUrl, reqHeader)
 	if err != nil {
 		return connectionStatus{connected: false, err: err}
 	}

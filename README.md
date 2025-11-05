@@ -10,13 +10,11 @@ Built this because I couldn't get Postman/Yaak/Bruno to play nice with SignalR.
 
 Doesn't support sending of messages to the group, only listens for messages transmitted
 
-
 Currently very bare bones, will add more to this as I need. Feel free to submit a pull request or fork for your own use
 
-
 ## Usage
-1 ```go run .```
-2 Follow prompts and enter server URL/Hub name
+1. ```go run .```   
+2.  Follow prompts and enter server url and headers if needed
 
 
 ## Compile

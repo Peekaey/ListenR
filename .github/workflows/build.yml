@@ -21,7 +21,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: "1.22"
+          go-version: "1.25"
 
       # Create build directory
       - name: Create build directory
@@ -41,6 +41,5 @@ jobs:
         with:
           name: snapshot-binaries
           path: |
-            dist/mytool-linux-amd64
-            dist/mytool-macos-arm64
-            dist/mytool-windows-amd64.zip
+            dist/ListenR-macos-arm64
+            dist/ListenR-windows-amd64.zip

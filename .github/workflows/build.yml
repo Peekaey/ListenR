@@ -1,0 +1,46 @@
+name: Go Snapshot Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Set up Go
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+
+      # Create build directory
+      - name: Create build directory
+        run: mkdir -p dist
+
+      # Build macOS ARM64
+      - name: Build macOS ARM64
+        run: GOOS=darwin GOARCH=arm64 go build -o dist/ListenR-macos-arm64 .
+
+      # Build Windows AMD64
+      - name: Build Windows AMD64
+        run: GOOS=windows GOARCH=amd64 go build -o dist/ListenR-windows-amd64.exe .
+
+      # Upload all binaries as GitHub Actions artifacts
+      - name: Upload snapshot artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: snapshot-binaries
+          path: |
+            dist/mytool-linux-amd64
+            dist/mytool-macos-arm64
+            dist/mytool-windows-amd64.zip

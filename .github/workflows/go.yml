@@ -1,0 +1,35 @@
+name: ListenR Go
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+
+      - name: Verify Go install
+        run: go version
+
+      # macOS ARM64 (Apple Silicon)
+      - name: Build macOS ARM64
+        run: GOOS=darwin GOARCH=arm64 go build -o build/ListenR .
+
+      # Windows AMD64
+      - name: Build Windows AMD64
+        run: GOOS=windows GOARCH=amd64 go build -o build/ListenR.exe .
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: binaries
+          path: build/

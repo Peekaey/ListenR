@@ -1,4 +1,4 @@
-name: ListenR Go
+name: Build Go Binaries
 
 on:
   push:
@@ -17,16 +17,14 @@ jobs:
         with:
           go-version: "1.22"
 
-      - name: Verify Go install
-        run: go version
+      - name: Create build directory
+        run: mkdir -p build
 
-      # macOS ARM64 (Apple Silicon)
       - name: Build macOS ARM64
-        run: GOOS=darwin GOARCH=arm64 go build -o build/ListenR .
+        run: GOOS=darwin GOARCH=arm64 go build -o build/ListenR-arm64 .
 
-      # Windows AMD64
       - name: Build Windows AMD64
-        run: GOOS=windows GOARCH=amd64 go build -o build/ListenR.exe .
+        run: GOOS=windows GOARCH=amd64 go build -o build/ListenR-amd64.exe .
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4

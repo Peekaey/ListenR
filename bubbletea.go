@@ -134,8 +134,9 @@ func (m BubbleteaModel) View() string {
 
 	// For Prompt Screen
 	if m.promptMode == true {
-		msg := "Type the websocket URL of the SignalR hub and press Enter - Leave a space after the websocket URL for headers separated by comma (ie, userId:123,apiKey:321).  Ctrl+C to quit."
-		return fmt.Sprintf("%s\n\n%s\n\n%s\n\n%s", titleStyle, msg, m.ti.View(), lipgloss.NewStyle().Faint(true).Render("Enter → connect"))
+		msg := "Type the websocket URL of the SignalR hub and press Enter. - Ctrl+C to quit. \n"
+		s := msg + "Leave a space after the websocket URL for headers separated by comma (ie, userId:123,apiKey:321)"
+		return fmt.Sprintf("%s\n\n%s\n\n%s\n\n%s", titleStyle, s, m.ti.View(), lipgloss.NewStyle().Faint(true).Render("Enter → connect"))
 	}
 
 	// For Normal Screen
